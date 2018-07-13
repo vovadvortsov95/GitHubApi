@@ -6,6 +6,7 @@ import com.example.vladimir.githubapi.api.ApiFactory
 import com.example.vladimir.githubapi.api.GitHubAPI
 import com.example.vladimir.githubapi.model.ItemResponce
 import com.example.vladimir.githubapi.model.User
+import com.example.vladimir.githubapi.model.UserInfo
 import org.reactivestreams.Subscription
 import retrofit2.Call
 import retrofit2.Callback
@@ -92,6 +93,18 @@ class UsersLiveData : LiveData<ItemResponce>() {
         }
 
 
+    }
+    fun searchUserRepos(user : User) {
+        val name = User().login
+        if (name != null) {
+            val apiFactory = ApiFactory()
+            val service: GitHubAPI = apiFactory.getUserRepos().create(GitHubAPI::class.java)
+       //     val call: Call<UserInfo> = service.getUserRepos(name)
+            // user.login
+            // api
+            // call
+            // callback
+        }
     }
 
     private fun unsubscribe() {

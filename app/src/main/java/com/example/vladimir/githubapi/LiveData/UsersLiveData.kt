@@ -5,6 +5,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.example.vladimir.githubapi.api.ApiFactory
 import com.example.vladimir.githubapi.api.GitHubAPI
 import com.example.vladimir.githubapi.model.ItemResponce
+import com.example.vladimir.githubapi.model.ResponceURL
 import com.example.vladimir.githubapi.model.User
 import com.example.vladimir.githubapi.model.UserInfo
 import org.reactivestreams.Subscription
@@ -35,22 +36,22 @@ class UsersLiveData : LiveData<ItemResponce>() {
     }
 
 
-    private fun searchUsers(): List<User>? {
+    private fun searchUsers(): List<String>? {
         unsubscribe()
-        var items: List<User>? = null
+        var items: List<String>? = null
         val apiFactory = ApiFactory()
         val service: GitHubAPI = apiFactory.getUserURL().create(GitHubAPI::class.java)
-        val call: Call<ItemResponce> = service.getUsersUrl("tom") // ItemResponce > StringUrls
-        call.enqueue(object : Callback<ItemResponce> {
+        val call: Call<ResponceURL> = service.getUsersUrl("tom") // ItemResponce > StringUrls
+        call.enqueue(object : Callback<ResponceURL> {
 
-            override fun onResponse(call: Call<ItemResponce>?, response: Response<ItemResponce>?) {
-                if (response!!.body() != null) {
-                    items = response.body()!!.items  //ItemResponce()
+            override fun onResponse(call: Call<ResponceURL>?, response: Response<ResponceURL>?) {
+                if (response!!.body() != null ) {
+                    items=response.body()!!.login!! //ItemResponce() items
                 }
 
             }
 
-            override fun onFailure(call: Call<ItemResponce>?, t: Throwable?) {
+            override fun onFailure(call: Call<ResponceURL>?, t: Throwable?) {
                 TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
             }
 
@@ -99,7 +100,8 @@ class UsersLiveData : LiveData<ItemResponce>() {
         if (name != null) {
             val apiFactory = ApiFactory()
             val service: GitHubAPI = apiFactory.getUserRepos().create(GitHubAPI::class.java)
-       //     val call: Call<UserInfo> = service.getUserRepos(name)
+            val call : Call<UserRepos> = service.getUserRepos(name)
+            //     val call: Call<UserInfo> = service.getUserRepos(name)
             // user.login
             // api
             // call
@@ -111,7 +113,12 @@ class UsersLiveData : LiveData<ItemResponce>() {
         if (subscription != null)
             subscription = null
     }
+    private fun String.getUserUrl(): List<User>? {
+
+
+    }
 
 }
+
 
 

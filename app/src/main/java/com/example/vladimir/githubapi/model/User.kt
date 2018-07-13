@@ -10,7 +10,11 @@ class User(
         // @Expose  val totalStars : Int? = null,
         @SerializedName("public_repos") @Expose val repos: Int? = null){
 
+    var url : String? = null
     public fun getUser() : User {
         return User(login,name,imageURL,repos)
+    }
+    public fun getUserUrl(): String? {
+        return url
     }
 }

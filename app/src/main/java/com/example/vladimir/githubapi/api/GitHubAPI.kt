@@ -18,7 +18,7 @@ public interface GitHubAPI {
     fun getUsersInfo(@Path("login") groupId: String): Call<User>
 
     @GET("/users/{login}/orgs")
-    fun getUserCompanies(@Path("login") groupId: String): Call<String>
+    fun getUserCompanies(@Path("login") groupId: String): Call<UserCompanies>
 
     @GET("users/{login}/repos")
     fun getUserRepos(@Path("login") groupId: String): Call<UserInfo>

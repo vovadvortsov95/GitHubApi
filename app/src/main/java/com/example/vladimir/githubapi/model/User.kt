@@ -18,5 +18,5 @@ class User(
     public fun getUserUrl(): String? {
         return url
     }
-    
+
 }

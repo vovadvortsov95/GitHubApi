@@ -3,10 +3,7 @@ package com.example.vladimir.githubapi.LiveData
 import android.arch.lifecycle.LiveData
 import com.example.vladimir.githubapi.api.ApiFactory
 import com.example.vladimir.githubapi.api.GitHubAPI
-import com.example.vladimir.githubapi.model.ItemResponce
-import com.example.vladimir.githubapi.model.ResponceURL
-import com.example.vladimir.githubapi.model.User
-import com.example.vladimir.githubapi.model.UserInfo
+import com.example.vladimir.githubapi.model.*
 import org.reactivestreams.Subscription
 import retrofit2.Call
 import retrofit2.Callback
@@ -116,22 +113,17 @@ class UsersLiveData : LiveData<ItemResponce>() {
 
             val apiFactoryComp = ApiFactory()
             val serviceComp: GitHubAPI = apiFactoryComp.getUserCompanies().create(GitHubAPI::class.java)
-            val callComp: Call<UserInfo> = serviceComp.getUserRepos(name)
-            call.enqueue(object : Callback<UserInfo> {
-                override fun onResponse(call: Call<UserInfo>?, response: Response<UserInfo>?) {
+            val callComp: Call<UserCompanies> = serviceComp.getUserCompanies(name)
+            callComp.enqueue(object : Callback<UserCompanies> {
+                override fun onResponse(call: Call<UserCompanies>?, response: Response<UserCompanies>?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
 
-                override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
+                override fun onFailure(call: Call<UserCompanies>?, t: Throwable?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
             })
-
-            //     val call: Call<UserInfo> = service.getUserRepos(name)
-            // user.login
-            // api
-            // call
-            // callback
+            
         }
     }
 

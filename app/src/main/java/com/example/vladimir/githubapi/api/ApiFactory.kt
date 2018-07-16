@@ -38,7 +38,7 @@ class ApiFactory {
     }
 
     fun getUserRepos() : Retrofit{
-        var gson = GsonBuilder().registerTypeAdapter(User::class.java,GitHubDeserializer())
+        val gson = GsonBuilder().registerTypeAdapter(User::class.java,GitHubDeserializer())
         return Retrofit.Builder()
                 .baseUrl(Constant.baseURL)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

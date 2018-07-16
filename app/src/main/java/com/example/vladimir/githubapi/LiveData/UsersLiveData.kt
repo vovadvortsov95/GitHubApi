@@ -1,7 +1,6 @@
 package com.example.vladimir.githubapi.LiveData
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
 import com.example.vladimir.githubapi.api.ApiFactory
 import com.example.vladimir.githubapi.api.GitHubAPI
 import com.example.vladimir.githubapi.model.ItemResponce
@@ -35,18 +34,18 @@ class UsersLiveData : LiveData<ItemResponce>() {
         unsubscribe()
     }
 
-
+    //TODO : tom -> search name field
     private fun searchUsers(): List<String>? {
         unsubscribe()
         var items: List<String>? = null
         val apiFactory = ApiFactory()
         val service: GitHubAPI = apiFactory.getUserURL().create(GitHubAPI::class.java)
-        val call: Call<ResponceURL> = service.getUsersUrl("tom") // ItemResponce > StringUrls
+        val call: Call<ResponceURL> = service.getUsersUrl("tom")
         call.enqueue(object : Callback<ResponceURL> {
 
             override fun onResponse(call: Call<ResponceURL>?, response: Response<ResponceURL>?) {
-                if (response!!.body() != null ) {
-                    items=response.body()!!.login!! //ItemResponce() items
+                if (response!!.body() != null) {
+                    items = response.body()!!.login!!
                 }
 
             }
@@ -67,7 +66,7 @@ class UsersLiveData : LiveData<ItemResponce>() {
 
     fun searchUserInfo() {
 
-        val users : MutableList<User>?= null
+        var users: List<User>? = null
         val userList = searchUsers()
         if (userList != null) {
             for (user in userList) {
@@ -77,8 +76,8 @@ class UsersLiveData : LiveData<ItemResponce>() {
                 call.enqueue(object : Callback<User> {
 
                     override fun onResponse(call: Call<User>?, response: Response<User>?) {
-                        if(response!!.body() != null){
-                           users!!.add(response.body()!!.getUser()) // i know i`m retard
+                        if (response!!.body() != null) {
+                            users = response.body()!!.getUser()
                         }
 
                     }
@@ -95,12 +94,39 @@ class UsersLiveData : LiveData<ItemResponce>() {
 
 
     }
-    fun searchUserRepos(user : User) {
+
+    fun searchUserRepos(user: User) {
         val name = User().login
+        var repos: UserInfo? = null
         if (name != null) {
             val apiFactory = ApiFactory()
             val service: GitHubAPI = apiFactory.getUserRepos().create(GitHubAPI::class.java)
-            val call : Call<UserRepos> = service.getUserRepos(name)
+            val call: Call<UserInfo> = service.getUserRepos(name)
+            call.enqueue(object : Callback<UserInfo> {
+                override fun onResponse(call: Call<UserInfo>?, response: Response<UserInfo>?) {
+                    if (response!!.body() != null)
+                        repos = response.body()!!.info
+
+                }
+
+                override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            })
+
+            val apiFactoryComp = ApiFactory()
+            val serviceComp: GitHubAPI = apiFactoryComp.getUserCompanies().create(GitHubAPI::class.java)
+            val callComp: Call<UserInfo> = serviceComp.getUserRepos(name)
+            call.enqueue(object : Callback<UserInfo> {
+                override fun onResponse(call: Call<UserInfo>?, response: Response<UserInfo>?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+
+                override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
+                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                }
+            })
+
             //     val call: Call<UserInfo> = service.getUserRepos(name)
             // user.login
             // api
@@ -113,12 +139,6 @@ class UsersLiveData : LiveData<ItemResponce>() {
         if (subscription != null)
             subscription = null
     }
-    private fun String.getUserUrl(): List<User>? {
 
-
-    }
 
 }
-
-
-

@@ -11,8 +11,9 @@ class User(
         @SerializedName("public_repos") @Expose val repos: Int? = null){
 
     var url : String? = null
-    public fun getUser() : User {
-        return User(login,name,imageURL,repos)
+    private lateinit var listUser : List<User>
+    public fun getUser() : List<User> {
+        return listUser
     }
     public fun getUserUrl(): String? {
         return url

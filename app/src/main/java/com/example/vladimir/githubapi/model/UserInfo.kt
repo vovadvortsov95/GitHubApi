@@ -1,10 +1,14 @@
 package com.example.vladimir.githubapi.model
 
-class UserInfo{
-    private var login : String? = null
-    private var name : String? = null
-    private var email : String? = null
-    private var imageURL : String? = null
-    private var companies : List<String>? = null
-    private var repositories : List<String>? = null
+import com.google.gson.annotations.Expose
+import com.google.gson.annotations.SerializedName
+
+class UserInfo(
+    @SerializedName(" ") @Expose var name : String,
+    @SerializedName(" ") @Expose var description : String ,
+    @SerializedName(" ") @Expose var language: String,
+    @SerializedName(" ") @Expose var stars :Int ,
+    @SerializedName(" ") @Expose var  branch: Int ){
+
+   lateinit var info : UserInfo
 }

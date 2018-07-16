@@ -1,8 +1,6 @@
 package com.example.vladimir.githubapi.api
 
-import com.example.vladimir.githubapi.model.ItemResponce
-import com.example.vladimir.githubapi.model.ResponceURL
-import com.example.vladimir.githubapi.model.User
+import com.example.vladimir.githubapi.model.*
 import retrofit2.Call
 
 import retrofit2.http.GET
@@ -23,7 +21,7 @@ public interface GitHubAPI {
     fun getUserCompanies(@Path("login") groupId: String): Call<String>
 
     @GET("users/{login}/repos")
-    fun getUserRepos(@Path("login") groupId: String): Call<String>
+    fun getUserRepos(@Path("login") groupId: String): Call<UserInfo>
 
  /*   @GET("/search/users?q=language:java+location:lagos")
     fun getItems(): Call<ItemResponse> */

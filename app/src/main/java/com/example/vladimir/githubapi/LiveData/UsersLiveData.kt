@@ -95,19 +95,19 @@ class UsersLiveData : LiveData<ItemResponce>() {
    private fun searchUserRepos(user: User) {
 
         val name = User().login
-        var repos: UserInfo? = null
+        var repos: UserRepos? = null
         if (name != null) {
             val apiFactory = ApiFactory()
             val service: GitHubAPI = apiFactory.getUserRepos().create(GitHubAPI::class.java)
-            val call: Call<UserInfo> = service.getUserRepos(name)
-            call.enqueue(object : Callback<UserInfo> {
-                override fun onResponse(call: Call<UserInfo>?, response: Response<UserInfo>?) {
+            val call: Call<UserRepos> = service.getUserRepos(name)
+            call.enqueue(object : Callback<UserRepos> {
+                override fun onResponse(call: Call<UserRepos>?, response: Response<UserRepos>?) {
                     if (response!!.body() != null)
                         repos = response.body()!!.info
 
                 }
 
-                override fun onFailure(call: Call<UserInfo>?, t: Throwable?) {
+                override fun onFailure(call: Call<UserRepos>?, t: Throwable?) {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
             })
@@ -119,7 +119,7 @@ class UsersLiveData : LiveData<ItemResponce>() {
   private  fun searchUserCompanies(user: User){
 
         val name = User().login
-        var repos: UserInfo? = null
+        var repos: UserRepos? = null
         if (name != null) {
             val apiFactoryComp = ApiFactory()
             val serviceComp: GitHubAPI = apiFactoryComp.getUserCompanies().create(GitHubAPI::class.java)

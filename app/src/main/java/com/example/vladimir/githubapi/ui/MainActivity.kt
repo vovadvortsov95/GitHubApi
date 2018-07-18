@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity(){
         setContentView(R.layout.activity_main)
 
 
-        var apiFactory : ApiFactory = ApiFactory()
-        var gitHubAPI : GitHubAPI = apiFactory.getUserURL().create(GitHubAPI::class.java)
+   //     var apiFactory : ApiFactory = ApiFactory()
+   //     var gitHubAPI : GitHubAPI = apiFactory.getUserURL().create(GitHubAPI::class.java) just for example
 
 
     }

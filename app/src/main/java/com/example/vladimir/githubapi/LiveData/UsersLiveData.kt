@@ -69,7 +69,7 @@ class UsersLiveData : LiveData<ItemResponce>() {
             for (user in userList) {
                 val apiFactory = ApiFactory()
                 val service: GitHubAPI = apiFactory.getUserInfo().create(GitHubAPI::class.java)
-                val call: Call<User> = service.getUsersInfo(user.toString())
+                val call: Call<User> = service.getUsersInfo(user)
                 call.enqueue(object : Callback<User> {
 
                     override fun onResponse(call: Call<User>?, response: Response<User>?) {
@@ -92,7 +92,8 @@ class UsersLiveData : LiveData<ItemResponce>() {
 
     }
 
-    fun searchUserRepos(user: User) {
+   private fun searchUserRepos(user: User) {
+
         val name = User().login
         var repos: UserInfo? = null
         if (name != null) {
@@ -111,6 +112,15 @@ class UsersLiveData : LiveData<ItemResponce>() {
                 }
             })
 
+        }
+    }
+
+
+  private  fun searchUserCompanies(user: User){
+
+        val name = User().login
+        var repos: UserInfo? = null
+        if (name != null) {
             val apiFactoryComp = ApiFactory()
             val serviceComp: GitHubAPI = apiFactoryComp.getUserCompanies().create(GitHubAPI::class.java)
             val callComp: Call<UserCompanies> = serviceComp.getUserCompanies(name)
@@ -123,9 +133,15 @@ class UsersLiveData : LiveData<ItemResponce>() {
                     TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                 }
             })
-            
         }
     }
+
+    fun userDetailInfo(user : User){
+        searchUserRepos(user)
+        searchUserCompanies(user)
+    }
+
+
 
     private fun unsubscribe() {
         if (subscription != null)
